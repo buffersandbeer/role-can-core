@@ -1,0 +1,12 @@
+---
+# Debian variables
+
+__can_packages:
+    - can-utils
+    - linux-headers-{{ ansible_kernel }}
+
+__can_kernel_mods:
+    - can
+    - can_raw
+    - slcan
+    - vcan

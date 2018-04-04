@@ -1,0 +1,22 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Ensure dependencies are installed on Debian
+  apt: 
+      name: "{{ item }}"
+      state: present
+  with_items: "{{ can_packages }}"
+
+- name: Ensure CAN kernel modules are enabled at boot
+  lineinfile: 
+      dest: /etc/modules 
+      line: "{{ item }}"
+      state: present
+  with_items: "{{ can_kernel_mods }}"
+
+- name: Ensure CAN kernel modules are running
+  modprobe: 
+      name: "{{ item }}"
+      state: present
+  with_items: "{{ can_kernel_mods }}"

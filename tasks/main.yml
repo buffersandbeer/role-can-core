@@ -1,0 +1,17 @@
+---
+# Include variables
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define CAN packages
+  set_fact:
+      can_packages: "{{ __can_packages | list }}"
+  when: can_packages is not defined
+
+- name: Define CAN Kernel modules
+  set_fact:
+      can_kernel_mods: "{{ __can_kernel_mods | list }}"
+  when: can_kernel_mods is not defined
+
+- name: Run setup tasks
+  include_tasks: "setup-{{ ansible_os_family }}.yml"
